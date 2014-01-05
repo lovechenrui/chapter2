@@ -17,15 +17,15 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 	//处理index.html的请求
-	@RequestMapping(value="/index")
+	@RequestMapping(value="/index.html")
 	public String loginPage(){
 		return "login";
 	}
-	
+	@RequestMapping(value="/logincheck.html")
 	public ModelAndView loginCheck(HttpServletRequest request,LoginCommand loginCommand){
 		boolean isValidUser = userService.hasMatchUser(loginCommand.getUserName(),loginCommand.getPassWord());
 		if(!isValidUser){
-			return new ModelAndView("login","erroe","用户名或密码错误");
+			return new ModelAndView("login","error","用户名或密码错误");
 		}else{
 			User user = userService.findUserByUserName(loginCommand.getUserName());
 			user.setLastip(request.getRemoteAddr());
